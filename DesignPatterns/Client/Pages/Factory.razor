@@ -1,0 +1,33 @@
+﻿@page "/factory"
+@using DesignPatterns.Shared.Patterns.FactoryPattern;
+@using static DesignPatterns.Shared.Enums;
+
+<h3>Factory</h3>
+
+<input type="number" @bind-value="Value"/>
+<br/>
+<br/>
+<button class="btn btn-primary" @onclick=@(() => ApplyDiscount(DiscountType.Normal))>Apply Normal Discount</button>
+<button class="btn btn-primary" @onclick=@(() => ApplyDiscount(DiscountType.Irregular))>Apply Irregular Discount</button>
+
+@if(!string.IsNullOrEmpty(DiscountValue)){
+    <p>@DiscountValue</p>
+}
+
+@code {
+    public decimal Value { get; set; } = 10m;
+    public string DiscountValue { get; set; } = string.Empty;
+    public IDiscountFactory? factory { get; set; }
+
+    protected override void OnInitialized() {
+        factory = new BasicDiscountFactory(Value);
+        base.OnInitialized();
+    }
+
+    void ApplyDiscount(DiscountType discountType) {
+        if(factory is not null) {
+            factory.ApplyPolicy(discountType);
+            DiscountValue = $"You're Saving £{factory.ApplyDiscount().ToString()}";
+        }
+    }
+}

@@ -1,0 +1,18 @@
+﻿@page "/singleton"
+@using DesignPatterns.Shared.Patterns.Singleton;
+
+<h3>Singleton</h3>
+<p>Check the console with F12</p>
+<input type="text" @bind-value="LogText"/>
+<button class="btn btn-primary" @onclick=AddLog>Add Console Log</button>
+
+<br />
+<p>If you leave and come back the log will still be here</p>
+<p>@SingletonLogger.Instance.LogCount()</p>
+@code {
+    public string LogText { get; set; }
+
+    void AddLog() {
+        SingletonLogger.Instance.Log(LogText);
+    }
+}
