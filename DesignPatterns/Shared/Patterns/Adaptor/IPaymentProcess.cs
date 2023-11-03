@@ -7,7 +7,5 @@ using System.Threading.Tasks;
 namespace DesignPatterns.Shared.Patterns.Adaptor {
     public interface IPaymentProcess {
         public string ProcessPayment(decimal amount, string recipent);
-
-        public string Display();
     }
 }

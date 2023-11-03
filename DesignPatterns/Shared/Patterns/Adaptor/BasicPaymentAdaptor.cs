@@ -13,10 +13,6 @@ namespace DesignPatterns.Shared.Patterns.Adaptor {
             this.differentPayment = differentPayment;
         }
 
-        public string Display() {
-            throw new NotImplementedException();
-        }
-
         public string ProcessPayment(decimal amount, string recipent) {
             string value = "";
 
