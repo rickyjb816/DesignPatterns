@@ -1,0 +1,34 @@
+﻿@page "/adaptor"
+@using DesignPatterns.Shared.Patterns.Adaptor;
+
+
+
+<h3>Adaptor</h3>
+
+<input type="text" @bind-value=Recipient />
+<input type="number" @bind-value=Amount/>
+
+<button class="btn btn-primary" @onclick=ProcessPayment>Process Payment</button>
+<button class="btn btn-primary" @onclick=ProcessPaymentWithAdaptor>Process Payment With Adaptor</button>
+
+<p>@display</p>
+
+
+@code {
+    public IPaymentProcess payment { get; set; }
+
+    public string Recipient { get; set; }
+    public decimal Amount { get; set; }
+    public string display { get; set; }
+
+    void ProcessPayment() {
+        payment = new BasicPayment();
+        display = payment.ProcessPayment(Amount, Recipient);
+    }
+
+    void ProcessPaymentWithAdaptor() {
+        DifferentPayment differentPayment = new DifferentPayment();
+        payment = new BasicPaymentAdaptor(differentPayment);
+        display = payment.ProcessPayment(Amount, Recipient);
+    }
+}

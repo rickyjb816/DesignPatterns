@@ -1,18 +1,36 @@
 ﻿@page "/builder"
+@using DesignPatterns.Shared.Patterns.Builder;
 
 
 
 <h3>Builder</h3>
 
-<button class="btn btn-primary" @onclick=BuildProductA>Build Product A</button>
-<button class="btn btn-primary" @onclick=BuildProductB>Build Product B</button>
+<button class="btn btn-primary" @onclick=BuildProductWithoutPrice>Build Product Without Price</button>
+<button class="btn btn-primary" @onclick=BuildProductWithPrice>Build Product With Price</button>
+
+@if(product is not null) {
+    <p>@product.ToString()</p>
+}
 
 @code {
-    void BuildProductA() {
+    public Product product { get; set; }
 
+    void BuildProductWithoutPrice() {
+        ProductBuilder builder = new ProductBuilder();
+
+        product = builder
+                    .IncludeName()
+                    .IncludeDescription()
+                    .Build();
     }
 
-    void BuildProductB() {
-        
+    void BuildProductWithPrice() {
+        ProductBuilder builder = new ProductBuilder();
+
+        product = builder
+                    .IncludeName()
+                    .IncludeDescription()
+                    .IncludePrice()
+                    .Build();
     }
 }

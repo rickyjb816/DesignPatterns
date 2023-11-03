@@ -1,0 +1,47 @@
+﻿@page "/prototypepattern"
+@using DesignPatterns.Shared.Patterns.Prototype;
+
+
+
+<h3>Prototype</h3>
+
+<p>Edit Product</p>
+<label>Name</label>
+<input type="text" placeholder="Name" @bind-value=editingProduct.Name/>
+<label>Description</label>
+<input type="text" placeholder="Description" @bind-value=editingProduct.Description/>
+<label>Price</label>
+<input type="number" @bind-value=editingProduct.Price/>
+
+<button class="btn btn-primary" @onclick=Reset>Reset</button>
+
+
+
+@if (product is not null) {
+    <p>Orginal Product @product.ToString()</p>
+}
+
+
+@if (editingProduct is not null) {
+    <p>Editing Product @editingProduct.ToString()</p>
+}
+
+@code {
+    public Product product { get; set; }
+
+    public Product editingProduct { get; set; }
+
+    protected override void OnInitialized() {
+        product = new Product() {
+                Name = "Orginal",
+                Description = "Orginal Description",
+                Price = 10m
+            };
+
+        editingProduct = product.Clone();
+    }
+
+    void Reset() {
+        editingProduct = product.Clone();
+    }
+}
